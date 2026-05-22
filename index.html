@@ -1305,6 +1305,29 @@
       letter-spacing: 2px;
     }
 
+    .hero-features {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-feature-item {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .hero-feature-item span {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      margin-left: 8px;
+      font-size: 16px;
+    }
+
     .cinematic-hero .hero-showcase {
       position: relative;
       flex: 1;
@@ -1700,17 +1723,17 @@
     <div class="juba-brand-hero">
       <h1>JUBA</h1>
       <p class="tagline">LUXURY FASHION & FOOTWEAR</p>
+      <div class="hero-features">
+        <div class="hero-feature-item"><span>01</span> Fabric Shell</div>
+        <div class="hero-feature-item"><span>02</span> Seams + Stitching</div>
+        <div class="hero-feature-item"><span>03</span> Label System</div>
+      </div>
     </div>
 
     <div class="hero-showcase">
       <div class="hero-tshirt-3d" id="tshirt-3d">
         <img src="images/studioproduc_tshirt_1779480129994.png" alt="JUBA T-Shirt">
       </div>
-    </div>
-  </section>
-      <div><span>01</span> Fabric Shell</div>
-      <div><span>02</span> Seams + Stitching</div>
-      <div><span>03</span> Label System</div>
     </div>
   </section>
 
