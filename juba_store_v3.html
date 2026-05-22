@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUBA STORE | Luxury Fashion & Footwear</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r158/three.min.js"></script>
+  <style>
+    :root {
+      --accent: #D2FF00;
+      --accent-dim: rgba(210, 255, 0, 0.1);
+      --bg-deep: #0A0A0A;
+      --bg-surface: #141414;
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      --text-dim: rgba(255, 255, 255, 0.3);
+      --glass: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.08);
+      --transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg-deep);
+      font-family: 'Tajawal', sans-serif;
+      color: var(--text-primary);
+      overflow-x: hidden;
+      direction: rtl;
+      line-height: 1.6;
+    }
+
+    /* Typography */
+    h1,
+    h2,
+    h3,
+    .brand {
+      font-family: 'Outfit', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 80px;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .nav-brand {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 5px;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--accent);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .nav-icons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 18px;
+      transition: var(--transition);
+    }
+
+    .nav-btn:hover {
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section Overhaul */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 8%;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-deep);
+      gap: 50px;
+    }
+
+    .hero-content {
+      flex: 1;
+      z-index: 10;
+      text-align: right;
+      /* RTL alignment */
+    }
+
+    .hero-showcase {
+      flex: 1.2;
+      position: relative;
+      height: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 2000px;
+      z-index: 5;
+    }
+
+    .showcase-shirt {
+      position: absolute;
+      width: 100%;
+      max-width: 450px;
+      filter: drop-shadow(0 50px 100px rgba(0, 0, 0, 0.8));
+      transition: var(--transition);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .shirt-center {
+      z-index: 3;
+      transform: translateZ(100px);
+      max-width: 550px;
+    }
+
+    .shirt-left {
+      z-index: 2;
+      transform: translateX(-40%) translateZ(-100px) rotateY(15deg) scale(0.8);
+      opacity: 0.8;
+      filter: brightness(0.2) grayscale(1) drop-shadow(0 30px 60px rgba(0, 0, 0, 0.9));
+      animation-delay: -1s;
+    }
+
+    .shirt-right {
+      z-index: 1;
+      transform: translateX(45%) translateZ(-200px) rotateY(-15deg) scale(0.75);
+      opacity: 0.7;
+      filter: brightness(0.4) sepia(0.5) hue-rotate(50deg) saturate(0.8) drop-shadow(0 30px 60px rgba(0, 0, 0, 0.9));
+      animation-delay: -2s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-30px);
+      }
+    }
+
+    /* Branding Overlay on Shirts */
+    .shirt-logo {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.4);
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    .hero-label {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .hero h1 {
+      font-size: clamp(50px, 8vw, 100px);
+      font-weight: 900;
+      line-height: 0.85;
+      margin-bottom: 30px;
+      letter-spacing: -2px;
+    }
+
+    .hero h1 span {
+      -webkit-text-stroke: 1px var(--text-primary);
+      color: transparent;
+      font-style: italic;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        flex-direction: column;
+        padding-top: 120px;
+        text-align: center;
+      }
+
+      .hero-content {
+        text-align: center;
+        order: 2;
+      }
+
+      .hero-showcase {
+        width: 100%;
+        order: 1;
+        min-height: 400px;
+        transform: scale(0.7);
+      }
+
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .btn {
+      padding: 18px 40px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-deep);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(210, 255, 0, 0.2);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      background: var(--text-primary);
+      color: var(--bg-deep);
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 120px 5%;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 900;
+    }
+
+    .section-title span {
+      color: var(--accent);
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .product-card {
+      position: relative;
+      background: var(--bg-surface);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      border-color: var(--accent);
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.4),
+        0 10px 25px rgba(210, 255, 0, 0.1);
+      transform: translateY(-8px);
+    }
+
+    .product-img-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--bg-deep);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      position: absolute;
+      top: 0;
+      left: 0;
+      filter: brightness(0.95) contrast(1.05) blur(0px);
+    }
+
+    .product-img.hover {
+      opacity: 0;
+      transform: scale(1.15);
+      filter: brightness(1.1) contrast(1.1) saturate(1.2) blur(0px);
+    }
+
+    .product-card:hover .product-img.main {
+      opacity: 0;
+      transform: scale(1.05);
+      filter: brightness(0.7) contrast(0.9) blur(6px);
+    }
+
+    .product-card:hover .product-img.hover {
+      opacity: 1;
+      transform: scale(1.1);
+      filter: brightness(1.05) contrast(1.05) saturate(1.1) blur(0px);
+    }
+
+    /* Glass Morphism Overlay */
+    .glass-morph-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 85%;
+      background: rgba(10, 10, 10, 0.75);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(210, 255, 0, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 15;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .product-card:hover .glass-morph-overlay {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: all;
+    }
+
+    .glass-morph-overlay::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(210, 255, 0, 0.6) 50%,
+        transparent 100%
+      );
+    }
+
+    .glass-morph-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .glass-morph-price {
+      font-size: 24px;
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 15px;
+      text-shadow: 0 0 20px rgba(210, 255, 0, 0.3);
+    }
+
+    .glass-morph-details {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .glass-morph-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .glass-morph-detail-value {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .glass-morph-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--accent);
+      color: var(--bg-deep);
+      border: none;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+
+    .glass-morph-btn:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(210, 255, 0, 0.4);
+    }
+
+    .product-info {
+      padding: 25px;
+      position: relative;
+      z-index: 2;
+      background: var(--bg-surface);
+      transition: all 0.4s ease;
+    }
+
+    .product-card:hover .product-info {
+      background: linear-gradient(to top, var(--bg-surface) 0%, rgba(20, 20, 20, 0.95) 100%);
+      transform: translateY(-5px);
+    }
+
+    .product-cat {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 5px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .product-card:hover .product-cat {
+      transform: translateX(5px);
+      text-shadow: 0 0 10px rgba(210, 255, 0, 0.5);
+    }
+
+    .product-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover .product-name {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .product-price {
+      font-size: 20px;
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .product-card:hover .product-price {
+      transform: scale(1.1);
+      color: var(--accent);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: var(--bg-deep);
+      padding: 5px 15px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      z-index: 5;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover .product-badge {
+      transform: scale(1.1) rotate(-3deg);
+      box-shadow: 0 5px 15px rgba(210, 255, 0, 0.4);
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: -25px 0 45px;
+    }
+
+    .filter-tab {
+      border: 1px solid var(--border);
+      background: var(--glass);
+      color: var(--text-secondary);
+      padding: 12px 22px;
+      cursor: pointer;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 800;
+      transition: var(--transition);
+    }
+
+    .filter-tab:hover,
+    .filter-tab.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--bg-deep);
+    }
+
+    .wishlist-btn {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      background: rgba(10, 10, 10, 0.62);
+      color: var(--text-primary);
+      z-index: 6;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: var(--transition);
+    }
+
+    .wishlist-btn.active,
+    .wishlist-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .rating-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .stars {
+      color: var(--accent);
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .review-count {
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      color: var(--text-secondary);
+      font-size: 11px;
+    }
+
+    .flash-deal {
+      padding-top: 0;
+    }
+
+    .deal-panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(210, 255, 0, 0.35);
+      background: linear-gradient(135deg, #161616 0%, #0a0a0a 58%, rgba(210, 255, 0, 0.14) 100%);
+      display: grid;
+      grid-template-columns: 1fr 0.8fr;
+      gap: 60px;
+      align-items: center;
+      padding: 64px;
+    }
+
+    .deal-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent 0 28px, rgba(255, 255, 255, 0.03) 29px 30px);
+      pointer-events: none;
+    }
+
+    .deal-content,
+    .deal-media {
+      position: relative;
+      z-index: 1;
+    }
+
+    .deal-kicker {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    .deal-title {
+      font-size: clamp(36px, 5vw, 72px);
+      line-height: 0.95;
+      margin: 16px 0 20px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
+      gap: 12px;
+      max-width: 430px;
+      margin: 32px 0;
+    }
+
+    .count-box {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      padding: 16px 10px;
+      text-align: center;
+    }
+
+    .count-box strong {
+      display: block;
+      font: 900 30px/1 'Outfit', sans-serif;
+      color: var(--accent);
+    }
+
+    .count-box span {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .deal-media img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.55);
+    }
+
+    .modal-shell {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.84);
+      backdrop-filter: blur(18px);
+      z-index: 2500;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .modal-shell.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .quick-modal {
+      width: min(1120px, 100%);
+      max-height: 92vh;
+      overflow: auto;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .quick-modal img {
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+      object-fit: cover;
+    }
+
+    .quick-info {
+      padding: 48px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .size-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 22px;
+    }
+
+    .size-btn {
+      min-width: 52px;
+      height: 46px;
+      border: 1px solid var(--border);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .size-btn.active,
+    .size-btn:hover {
+      background: var(--accent);
+      color: var(--bg-deep);
+      border-color: var(--accent);
+    }
+
+    .detail-row {
+      border-top: 1px solid var(--border);
+      padding: 16px 0;
+      color: var(--text-secondary);
+    }
+
+    .detail-row strong {
+      color: var(--text-primary);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .size-chart {
+      display: none;
+      margin: 10px 0 20px;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .size-chart.show {
+      display: block;
+    }
+
+    .size-chart div {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .size-chart div:last-child {
+      border-bottom: 0;
+    }
+
+    .promo-card {
+      width: min(460px, 100%);
+      background: var(--bg-surface);
+      border: 1px solid rgba(210, 255, 0, 0.35);
+      padding: 42px;
+      text-align: center;
+      box-shadow: 0 30px 120px rgba(0, 0, 0, 0.65);
+    }
+
+    .promo-card h2 {
+      font-size: 44px;
+      margin: 10px 0 14px;
+    }
+
+    .promo-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .promo-form input {
+      min-width: 0;
+      flex: 1;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 15px;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      left: 22px;
+      bottom: 22px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #25D366;
+      color: #07140b;
+      display: grid;
+      place-items: center;
+      z-index: 1800;
+      text-decoration: none;
+      box-shadow: 0 18px 45px rgba(37, 211, 102, 0.35);
+      transition: var(--transition);
+      font-weight: 900;
+    }
+
+    .whatsapp-float:hover {
+      transform: translateY(-4px) scale(1.03);
+    }
+
+    .social-toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      max-width: 360px;
+      background: rgba(20, 20, 20, 0.96);
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      color: var(--text-secondary);
+      z-index: 1800;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      transform: translateY(25px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .social-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background: var(--accent);
+      padding: 100px 5%;
+      color: var(--bg-deep);
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      font-size: 60px;
+      margin-bottom: 20px;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 900;
+    }
+
+    .newsletter p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      opacity: 0.8;
+    }
+
+    .newsletter-form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      font-size: 16px;
+      outline: none;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .newsletter-btn {
+      background: var(--bg-deep);
+      color: var(--accent);
+      border: none;
+      padding: 0 40px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .newsletter-btn:hover {
+      background: #000;
+    }
+
+    /* Marquee */
+    .marquee {
+      background: var(--bg-surface);
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 30s linear infinite;
+    }
+
+    .marquee-item {
+      display: inline-block;
+      padding: 0 50px;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .marquee-item span {
+      color: var(--accent);
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* Hero Section: Exploded View Overhaul */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 8%;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
+      gap: 50px;
+    }
+
+    .hero-fog {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 50%, var(--accent-dim) 0%, transparent 70%);
+      filter: blur(80px);
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-content {
+      flex: 1;
+      z-index: 100;
+      text-align: right;
+    }
+
+    .hero-showcase {
+      flex: 1.2;
+      position: relative;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 2000px;
+      z-index: 10;
+      transform: scale(0.7);
+    }
+
+    .t-layer {
+      position: absolute;
+      width: 100%;
+      max-width: 600px;
+      transition: filter 0.5s ease;
+      will-change: transform, filter, opacity;
+      background: transparent;
+    }
+    
+    .t-layer img {
+      mix-blend-mode: darken;
+    }
+
+    /* Clip Paths for Exploded Pieces */
+    .t-body {
+      clip-path: polygon(25% 15%, 75% 15%, 85% 100%, 15% 100%);
+      z-index: 10;
+    }
+
+    .t-sleeve-l {
+      clip-path: polygon(0% 15%, 30% 10%, 30% 45%, 5% 55%);
+      z-index: 5;
+    }
+
+    .t-sleeve-r {
+      clip-path: polygon(70% 10%, 100% 15%, 95% 55%, 70% 45%);
+      z-index: 5;
+    }
+
+    .t-collar {
+      clip-path: polygon(35% 0%, 65% 0%, 70% 20%, 30% 20%);
+      z-index: 15;
+    }
+
+    .t-stitching {
+      filter: brightness(3) contrast(2) opacity(0) saturate(0);
+      z-index: 12;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .t-wireframe {
+      filter: invert(1) brightness(0.5) contrast(2) opacity(0);
+      z-index: 2;
+      mix-blend-mode: color-dodge;
+    }
+
+    .hero-label {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .hero h1 {
+      font-size: clamp(70px, 10vw, 140px);
+      font-weight: 900;
+      line-height: 0.85;
+      margin-bottom: 30px;
+      letter-spacing: -2px;
+      text-shadow: 0 0 40px rgba(210, 255, 0, 0.08);
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+      font-style: italic;
+      text-shadow: 0 0 25px rgba(210, 255, 0, 0.15);
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        flex-direction: column;
+        padding-top: 120px;
+        text-align: center;
+      }
+
+      .hero-content {
+        text-align: center;
+        order: 2;
+      }
+
+      .hero-showcase {
+        width: 100%;
+        order: 1;
+        min-height: 50vh;
+        transform: scale(0.6);
+      }
+
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    /* JUBA Hero Section */
+    .cinematic-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8%;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      overflow: hidden;
+    }
+
+    .juba-brand-hero {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+    }
+
+    .juba-brand-hero h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(120px, 18vw, 280px);
+      font-weight: 900;
+      line-height: 0.85;
+      letter-spacing: -8px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin: 0;
+      text-shadow: 0 0 80px rgba(210, 255, 0, 0.3);
+      transform-origin: right center;
+    }
+
+    .juba-brand-hero .tagline {
+      font-size: clamp(16px, 2vw, 24px);
+      color: var(--text-secondary);
+      margin-top: 20px;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+
+    .cinematic-hero .hero-showcase {
+      position: relative;
+      flex: 1;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1500px;
+      z-index: 5;
+    }
+
+    .hero-tshirt-3d {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease-out;
+    }
+
+    .hero-tshirt-3d img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(210, 255, 0, 0.15) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (max-width: 900px) {
+      .cinematic-hero {
+        flex-direction: column;
+        padding: 120px 6% 60px;
+        text-align: center;
+      }
+
+      .juba-brand-hero h1 {
+        font-size: clamp(80px, 15vw, 150px);
+        transform-origin: center;
+      }
+
+      .cinematic-hero .hero-showcase {
+        height: 50vh;
+        margin-top: 40px;
+      }
+
+      .hero-tshirt-3d {
+        max-width: 350px;
+      }
+    }
+
+    /* Cart Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      left: -450px;
+      width: 450px;
+      height: 100vh;
+      background: var(--bg-surface);
+      z-index: 2000;
+      transition: var(--transition);
+      padding: 40px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open {
+      left: 0;
+    }
+
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1999;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+    }
+
+    .cart-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Footer */
+    footer {
+      padding: 100px 5% 50px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 80px;
+    }
+
+    .footer-brand {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .footer-text {
+      color: var(--text-secondary);
+      max-width: 300px;
+    }
+
+    .footer-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--text-primary);
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-link {
+      margin-bottom: 15px;
+    }
+
+    .footer-link a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+
+    .footer-link a:hover {
+      color: var(--accent);
+      padding-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cart-drawer {
+        width: 100%;
+        left: -100%;
+      }
+
+      .section-header,
+      .deal-panel,
+      .quick-modal,
+      .promo-form {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .filter-tabs {
+        margin-top: -20px;
+      }
+
+      .deal-panel,
+      .quick-info,
+      .promo-card {
+        padding: 28px;
+      }
+
+      .countdown {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .quick-modal img {
+        min-height: 320px;
+      }
+
+      .kids-panel {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+        padding: 28px !important;
+      }
+
+      .kids-panel h2 {
+        font-size: 34px !important;
+      }
+
+      .social-toast {
+        left: 18px;
+        right: 18px;
+        bottom: 92px;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+      <h2 class="footer-title" style="margin-bottom:0">سلة التسوق</h2>
+      <button class="nav-btn" onclick="toggleCart()">✕</button>
+    </div>
+    <div id="cart-items" style="flex:1; overflow-y:auto;">
+      <!-- Cart Items injected here -->
+    </div>
+    <div style="border-top: 1px solid var(--border); padding-top:20px; margin-top:20px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+        <span>الإجمالي:</span>
+        <span id="cart-total" style="font-weight:900; color:var(--accent);">0 جنيه</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%">إتمام الطلب</button>
+    </div>
+  </div>
+
+  <div class="modal-shell" id="quick-view-modal" aria-hidden="true"></div>
+  <div class="modal-shell" id="promo-popup" aria-hidden="true">
+    <div class="promo-card">
+      <div class="deal-kicker">FIRST ORDER</div>
+      <h2>15% OFF</h2>
+      <p style="color:var(--text-secondary);">Get 15% off your first JUBA order. Drop your email and claim the private code.</p>
+      <form class="promo-form" onsubmit="event.preventDefault(); closePromoPopup(true);">
+        <input type="email" placeholder="Email address" required>
+        <button class="btn btn-primary" type="submit" style="padding:14px 22px;">Claim</button>
+      </form>
+      <button class="nav-btn" onclick="closePromoPopup(true)" style="margin-top:20px; color:var(--text-secondary); font-size:14px;">Maybe later</button>
+    </div>
+  </div>
+  <a class="whatsapp-float" href="https://wa.me/201098277229" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WA</a>
+  <div class="social-toast" id="social-toast" role="status" aria-live="polite"></div>
+
+  <nav id="navbar">
+    <a href="#" class="nav-brand">JUBA<span>.</span></a>
+    <div class="nav-links">
+      <a href="#" class="nav-link active">الرئيسية</a>
+      <a href="#collection" class="nav-link">المواد</a>
+      <a href="#men" class="nav-link">الرجال</a>
+      <a href="#kids" class="nav-link">الأطفال</a>
+    </div>
+    <div class="nav-icons">
+      <button class="nav-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg></button>
+      <button class="nav-btn" onclick="toggleCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg></button>
+      <button class="nav-btn"
+        style="background:var(--accent); color:var(--bg-deep); padding:5px 15px; border-radius:4px; font-weight:700; font-size:12px; font-family:'Tajawal'">دخول</button>
+    </div>
+  </nav>
+
+  <section class="hero cinematic-hero" id="hero-section">
+    <div class="hero-glow"></div>
+    
+    <div class="juba-brand-hero">
+      <h1>JUBA</h1>
+      <p class="tagline">LUXURY FASHION & FOOTWEAR</p>
+    </div>
+
+    <div class="hero-showcase">
+      <div class="hero-tshirt-3d" id="tshirt-3d">
+        <img src="images/studioproduc_tshirt_1779480129994.png" alt="JUBA T-Shirt">
+      </div>
+    </div>
+  </section>
+      <div><span>01</span> Fabric Shell</div>
+      <div><span>02</span> Seams + Stitching</div>
+      <div><span>03</span> Label System</div>
+    </div>
+  </section>
+
+  <div class="marquee">
+    <div class="marquee-inner">
+      <div class="marquee-item"><span>✦</span> شحن مجاني لكافة المحافظات</div>
+      <div class="marquee-item"><span>✦</span> خصومات تصل إلى 40%</div>
+      <div class="marquee-item"><span>✦</span> خامات إيطالية فاخرة</div>
+      <div class="marquee-item"><span>✦</span> أحدث صيحات الموضة العالمية</div>
+      <!-- Duplicate for seamless loop -->
+      <div class="marquee-item"><span>✦</span> شحن مجاني لكافة المحافظات</div>
+      <div class="marquee-item"><span>✦</span> خصومات تصل إلى 40%</div>
+      <div class="marquee-item"><span>✦</span> خامات إيطالية فاخرة</div>
+      <div class="marquee-item"><span>✦</span> أحدث صيحات الموضة العالمية</div>
+    </div>
+  </div>
+
+  <section class="section" id="collection">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">المجموعة <span>المختارة</span></h2>
+        <p style="color:var(--text-secondary)">قطع فريدة تم اختيارها بعناية لتناسب أسلوب حياتك.</p>
+      </div>
+      <a href="#" style="color:var(--accent); font-weight:700; text-decoration:none;">مشاهدة الكل ⟶</a>
+    </div>
+
+    <div class="filter-tabs" id="filter-tabs" aria-label="Product filters">
+      <button class="filter-tab active" data-category="All">الكل</button>
+      <button class="filter-tab" data-category="Top Wear">Top Wear</button>
+      <button class="filter-tab" data-category="Jackets">Jackets</button>
+      <button class="filter-tab" data-category="Footwear">Footwear</button>
+      <button class="filter-tab" data-category="Kids">Kids</button>
+    </div>
+
+    <div class="product-grid" id="product-grid">
+      <!-- Products injected here -->
+    </div>
+  </section>
+
+  <section class="section flash-deal" id="flash-deal">
+    <div class="deal-panel">
+      <div class="deal-content">
+        <div class="deal-kicker">24H FLASH DROP</div>
+        <h2 class="deal-title">PHANTOM SNEAKER DEAL</h2>
+        <p style="color:var(--text-secondary); font-size:18px; max-width:560px;">Limited daily price on the featured streetwear sneaker. The timer resets every 24 hours for demo checkout flow.</p>
+        <div class="countdown" id="countdown">
+          <div class="count-box"><strong id="count-hours">00</strong><span>Hours</span></div>
+          <div class="count-box"><strong id="count-minutes">00</strong><span>Minutes</span></div>
+          <div class="count-box"><strong id="count-seconds">00</strong><span>Seconds</span></div>
+          <div class="count-box"><strong id="count-stock">12</strong><span>Left</span></div>
+        </div>
+        <button class="btn btn-primary" onclick="openQuickView(3)">Shop Flash Deal</button>
+      </div>
+      <div class="deal-media">
+        <img src="https://images.pexels.com/photos/1461048/pexels-photo-1461048.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Phantom Luxury Sneaker">
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kids" style="padding-top:0;">
+    <div class="kids-panel"
+      style="background:var(--bg-surface); padding:80px; display:grid; grid-template-columns: 1fr 1fr; gap:80px; align-items:center; border:1px solid var(--border);">
+      <div style="position:relative;">
+        <img src="images/kids_fashion_pinterest_1779480345574.png" alt="Kids Collection"
+          style="width:100%; border-radius:4px; box-shadow: 0 40px 80px rgba(0,0,0,0.5);">
+        <div
+          style="position:absolute; bottom:40px; right:-20px; background:var(--accent); color:var(--bg-deep); padding:20px; font-weight:900; font-size:24px; box-shadow: 0 10px 30px rgba(210,255,0,0.3);">
+          NEW KIDS</div>
+      </div>
+      <div>
+        <span class="hero-label">FOR THE SMALL ONES</span>
+        <h2 style="font-size:48px; margin-bottom:20px; font-weight:900;">أناقة أطفالك<br>تبدأ من هنا</h2>
+        <p style="color:var(--text-secondary); margin-bottom:30px; font-size:18px;">نقدم مجموعة واسعة من الملابس
+          والأحذية للأطفال، تجمع بين الراحة والجمال، بألوان عصرية وخامات صحية مختارة بعناية.</p>
+        <a href="#" class="btn btn-outline" style="border-color:var(--accent); color:var(--accent);">اكتشف قسم
+          الأطفال</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <div class="hero-label" style="color:var(--bg-deep); opacity:0.6;">JOIN THE CLUB</div>
+    <h2 style="font-weight:900">كن أول من يعلم</h2>
+    <p>اشترك في نشرتنا الإخبارية للحصول على أحدث العروض والمجموعات الحصرية والمناسبات العالمية.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('شكراً لاشتراكك!');">
+      <input type="email" class="newsletter-input" placeholder="عنوان بريدك الإلكتروني" required>
+      <button type="submit" class="newsletter-btn">اشترك الآن</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">JUBA<span>.</span></div>
+        <p class="footer-text">متجر JUBA للأزياء الفاخرة. ريادة في التصميم وجودة لا تضاهى منذ عام 2010. نسعى دائماً
+          لتقديم الأفضل لعملائنا بكل فخر واعتزاز.</p>
+      </div>
+      <div>
+        <h3 class="footer-title">التسوق</h3>
+        <ul class="footer-links">
+          <li class="footer-link"><a href="#">جديدنا</a></li>
+          <li class="footer-link"><a href="#">الأكثر مبيعاً</a></li>
+          <li class="footer-link"><a href="#">خصومات صيفية</a></li>
+          <li class="footer-link"><a href="#">المجموعات المحدودة</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer-title">المساعدة</h3>
+        <ul class="footer-links">
+          <li class="footer-link"><a href="#">تتبع طلبك</a></li>
+          <li class="footer-link"><a href="#">سياسة الاسترجاع</a></li>
+          <li class="footer-link"><a href="#">مناطق الشحن</a></li>
+          <li class="footer-link"><a href="#">مركز المساعدة</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer-title">تابعنا</h3>
+        <ul class="footer-links">
+          <li class="footer-link"><a href="#">Instagram</a></li>
+          <li class="footer-link"><a href="#">Facebook</a></li>
+          <li class="footer-link"><a href="#">TikTok</a></li>
+          <li class="footer-link"><a href="#">WhatsApp Business</a></li>
+        </ul>
+      </div>
+    </div>
+    <div
+      style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:30px; color:var(--text-dim); font-size:12px;">
+      <span>© 2025 جميع الحقوق محفوظة لمتجر JUBA LUXURY STORE.</span>
+      <div style="display:flex; gap:30px;">
+        <a href="#" style="color:inherit; text-decoration:none;">سياسة الخصوصية</a>
+        <a href="#" style="color:inherit; text-decoration:none;">الشروط والأحكام</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const imgUrl = (photoId, width = 1000) => `https://images.pexels.com/photos/${photoId}/pexels-photo-${photoId}.jpeg?auto=compress&cs=tinysrgb&w=${width}`;
+
+    // Product data keeps hover sources category-safe for scalable grids.
+    const products = [
+      {
+        id: 0,
+        name: 'Essential White T-Shirt',
+        price: '450',
+        cat: 'Top Wear',
+        img: imgUrl('12025472'),
+        hoverImage: imgUrl('12025472', 1200),
+        imageVariants: [imgUrl('12025472', 1200)],
+        badge: 'NEW',
+        rating: 4.8,
+        reviews: 126,
+        stock: 'In stock - 18 pieces',
+        fabric: '240 GSM brushed cotton jersey with reinforced neckline.',
+        description: 'A clean everyday tee with a structured shoulder, soft hand feel, and a premium streetwear drape.'
+      },
+      {
+        id: 1,
+        name: 'Shadow Black T-Shirt',
+        price: '520',
+        cat: 'Top Wear',
+        img: imgUrl('8532616'),
+        hoverProductId: 0,
+        hoverImage: imgUrl('8532616', 1200),
+        imageVariants: [imgUrl('8532616', 1200)],
+        badge: 'BESTSELLER',
+        rating: 4.7,
+        reviews: 142,
+        stock: 'In stock - 27 pieces',
+        fabric: 'Soft compact cotton with a clean black dye finish.',
+        description: 'A sharp black tee for daily styling, made to hold its shape through repeated wear.'
+      },
+      {
+        id: 2,
+        name: 'Cream Knit Top',
+        price: '680',
+        cat: 'Top Wear',
+        img: imgUrl('6046231'),
+        hoverProductId: 1,
+        hoverImage: imgUrl('6046231', 1200),
+        imageVariants: [imgUrl('6046231', 1200)],
+        badge: 'SOFT TOUCH',
+        rating: 4.6,
+        reviews: 88,
+        stock: 'In stock - 14 pieces',
+        fabric: 'Fine knit cotton blend with ribbed hem and sleeve finish.',
+        description: 'A lightweight knit top with an elevated texture and a relaxed premium silhouette.'
+      },
+      {
+        id: 3,
+        name: 'Phantom Luxury Sneaker',
+        price: '1,200',
+        cat: 'Footwear',
+        img: imgUrl('1461048'),
+        hoverProductId: 4,
+        hoverImage: imgUrl('1461048', 1200),
+        imageVariants: [imgUrl('1461048', 1200)],
+        badge: 'TRENDING',
+        rating: 4.9,
+        reviews: 211,
+        stock: 'Low stock - 12 pairs',
+        fabric: 'Layered vegan leather upper, cushioned EVA midsole, rubber grip sole.',
+        description: 'A sculptural sneaker built for long city days, finished with a bold profile and a soft, secure interior.'
+      },
+      {
+        id: 4,
+        name: 'Cloud High-Top Sneakers',
+        price: '1,350',
+        cat: 'Footwear',
+        img: imgUrl('20350010'),
+        hoverProductId: 5,
+        hoverImage: imgUrl('20350010', 1200),
+        imageVariants: [imgUrl('20350010', 1200)],
+        badge: 'LIMITED',
+        rating: 4.8,
+        reviews: 164,
+        stock: 'In stock - 16 pairs',
+        fabric: 'Premium synthetic leather panels with padded collar and lace-up support.',
+        description: 'A high-top sneaker with clean contrast panels and a polished streetwear profile.'
+      },
+      {
+        id: 5,
+        name: 'Studio Runner Sneakers',
+        price: '980',
+        cat: 'Footwear',
+        img: imgUrl('4252969'),
+        hoverProductId: 3,
+        hoverImage: imgUrl('4252969', 1200),
+        imageVariants: [imgUrl('4252969', 1200)],
+        badge: 'HOT',
+        rating: 4.5,
+        reviews: 73,
+        stock: 'In stock - 31 pairs',
+        fabric: 'Mesh textile upper, lightweight foam sole, lace-up fit.',
+        description: 'A crisp runner silhouette designed for easy styling with denim, joggers, and summer fits.'
+      },
+      {
+        id: 6,
+        name: 'Black Leather Jacket',
+        price: '2,100',
+        cat: 'Jackets',
+        img: imgUrl('6044143'),
+        hoverProductId: 7,
+        hoverImage: imgUrl('6044143', 1200),
+        imageVariants: [imgUrl('6044143', 1200)],
+        badge: 'PREMIUM',
+        rating: 4.9,
+        reviews: 96,
+        stock: 'Low stock - 7 pieces',
+        fabric: 'Soft faux leather shell with smooth lining and metal zipper detail.',
+        description: 'A clean black jacket built around sharp lines, texture, and a timeless evening profile.'
+      },
+      {
+        id: 7,
+        name: 'White Studio Hoodie',
+        price: '990',
+        cat: 'Jackets',
+        img: imgUrl('8217419'),
+        hoverProductId: 6,
+        hoverImage: imgUrl('8217419', 1200),
+        imageVariants: [imgUrl('8217419', 1200)],
+        badge: 'COZY',
+        rating: 4.6,
+        reviews: 117,
+        stock: 'In stock - 19 pieces',
+        fabric: 'Heavy fleece cotton blend with soft brushed interior.',
+        description: 'A clean hoodie for layered fits, made with a relaxed cut and warm studio texture.'
+      },
+      {
+        id: 8,
+        name: 'Urban Zip Jacket',
+        price: '1,650',
+        cat: 'Jackets',
+        img: imgUrl('626547'),
+        hoverProductId: 6,
+        hoverImage: imgUrl('626547', 1200),
+        imageVariants: [imgUrl('626547', 1200)],
+        badge: 'DROP',
+        rating: 4.7,
+        reviews: 65,
+        stock: 'In stock - 11 pieces',
+        fabric: 'Structured woven shell with matte finish and comfort lining.',
+        description: 'A monochrome outerwear piece with a strong urban line and easy layering weight.'
+      },
+      {
+        id: 9,
+        name: 'Safari Kids Set',
+        price: '750',
+        cat: 'Kids',
+        img: imgUrl('5693888'),
+        hoverProductId: 10,
+        hoverImage: imgUrl('5693888', 1200),
+        imageVariants: [imgUrl('5693888', 1200)],
+        badge: 'HOT',
+        rating: 4.6,
+        reviews: 97,
+        stock: 'In stock - 23 sets',
+        fabric: 'Breathable cotton blend with flexible seams for everyday movement.',
+        description: 'A playful coordinated kids set with soft textures, easy layering, and colors designed for daily wear.'
+      },
+      {
+        id: 10,
+        name: 'Wardrobe Play Dress',
+        price: '690',
+        cat: 'Kids',
+        img: imgUrl('8083839'),
+        hoverProductId: 9,
+        hoverImage: imgUrl('8083839', 1200),
+        imageVariants: [imgUrl('8083839', 1200)],
+        badge: 'NEW',
+        rating: 4.5,
+        reviews: 54,
+        stock: 'In stock - 20 pieces',
+        fabric: 'Lightweight cotton layers with flexible seams and soft finishing.',
+        description: 'A bright playful kids outfit for weekend styling, made for movement and comfort.'
+      },
+      {
+        id: 11,
+        name: 'Mini Street Layer',
+        price: '820',
+        cat: 'Kids',
+        img: imgUrl('28771909'),
+        hoverProductId: 9,
+        hoverImage: imgUrl('28771909', 1200),
+        imageVariants: [imgUrl('28771909', 1200)],
+        badge: 'COMFY',
+        rating: 4.7,
+        reviews: 61,
+        stock: 'In stock - 13 pieces',
+        fabric: 'Soft cotton blend with easy-care finish and relaxed fit.',
+        description: 'A modern kids layer with everyday durability, cheerful styling, and simple comfort.'
+      }
+    ];
+
+    const grid = document.getElementById('product-grid');
+    const wishlistKey = 'jubaWishlist';
+    let activeCategory = 'All';
+    let selectedSize = 'M';
+    let wishlist = JSON.parse(localStorage.getItem(wishlistKey) || '[]');
+    const productsById = new Map(products.map(product => [product.id, product]));
+    const productsByCategory = products.reduce((index, product) => {
+      const category = product.cat.trim().toLowerCase();
+      if (!index.has(category)) {
+        index.set(category, []);
+      }
+      index.get(category).push(product);
+      return index;
+    }, new Map());
+
+    function saveWishlist() {
+      localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+    }
+
+    function getStars(rating) {
+      const filled = Math.round(rating);
+      return '★★★★★'.slice(0, filled) + '☆☆☆☆☆'.slice(filled);
+    }
+
+    function getSameProductHoverImage(product) {
+      const variant = product.imageVariants?.find(image => image && image !== product.img);
+      return variant || product.hoverImage || product.img;
+    }
+
+    function getSameCategoryHoverProduct(product) {
+      const category = product.cat.trim().toLowerCase();
+      const categoryProducts = productsByCategory.get(category) || [];
+      const preferredHoverProduct = productsById.get(product.hoverProductId);
+
+      if (preferredHoverProduct && preferredHoverProduct.cat.trim().toLowerCase() === category) {
+        return preferredHoverProduct;
+      }
+
+      return categoryProducts.find(candidate => candidate.id !== product.id && candidate.img);
+    }
+
+    function resolveHoverImage(product) {
+      const sameProductImage = getSameProductHoverImage(product);
+      const sameCategoryProduct = getSameCategoryHoverProduct(product);
+
+      if (sameProductImage && sameProductImage !== product.img) {
+        return sameProductImage;
+      }
+
+      if (sameCategoryProduct && sameCategoryProduct.cat.trim().toLowerCase() === product.cat.trim().toLowerCase()) {
+        return sameCategoryProduct.img;
+      }
+
+      return product.hoverImage || product.img;
+    }
+
+    function productCardTemplate(product) {
+      const wished = wishlist.includes(product.id);
+      const hoverImage = resolveHoverImage(product);
+
+      return `
+        <div class="product-card" data-category="${product.cat}" onclick="openQuickView(${product.id})">
+          ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+          <button class="wishlist-btn ${wished ? 'active' : ''}" onclick="toggleWishlist(event, ${product.id})" aria-label="Toggle wishlist">
+            ${wished ? '♥' : '♡'}
+          </button>
+          <div class="product-img-container">
+            <img src="${product.img}" alt="${product.name}" class="product-img main">
+            <img src="${hoverImage}" alt="${product.name} hover view" class="product-img hover">
+            
+            <!-- Glass Morphism Overlay -->
+            <div class="glass-morph-overlay">
+              <div class="glass-morph-title">${product.name}</div>
+              <div class="glass-morph-price">${product.price} جنيه</div>
+              <div class="glass-morph-details">
+                <div class="glass-morph-detail">
+                  <span>التقييم</span>
+                  <span class="glass-morph-detail-value">${product.rating} ⭐</span>
+                </div>
+                <div class="glass-morph-detail">
+                  <span>المراجعات</span>
+                  <span class="glass-morph-detail-value">${product.reviews}</span>
+                </div>
+              </div>
+              <button class="glass-morph-btn" onclick="event.stopPropagation(); addToCart('${product.name}', '${product.price}')">
+                أضف للسلة
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <div class="product-cat">${product.cat}</div>
+            <div class="product-name">${product.name}</div>
+            <div class="rating-row">
+              <span class="stars">${getStars(product.rating)} ${product.rating}</span>
+              <span class="review-count">${product.reviews} reviews</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+              <div class="product-price">${product.price} جنيه</div>
+              <button class="btn btn-primary" style="padding:10px 20px; font-size:12px;" onclick="event.stopPropagation(); addToCart('${product.name}', '${product.price}')">أضف للسلة</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderProducts() {
+      const visibleProducts = activeCategory === 'All'
+        ? products
+        : products.filter(product => product.cat === activeCategory);
+
+      grid.innerHTML = visibleProducts.map(productCardTemplate).join('');
+    }
+
+    function toggleWishlist(event, productId) {
+      event.stopPropagation();
+      wishlist = wishlist.includes(productId)
+        ? wishlist.filter(id => id !== productId)
+        : [...wishlist, productId];
+      saveWishlist();
+      renderProducts();
+    }
+
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        activeCategory = tab.dataset.category;
+        document.querySelectorAll('.filter-tab').forEach(item => item.classList.remove('active'));
+        tab.classList.add('active');
+        renderProducts();
+      });
+    });
+
+    function openQuickView(productId) {
+      const product = products.find(item => item.id === productId);
+      const modal = document.getElementById('quick-view-modal');
+      selectedSize = 'M';
+      modal.innerHTML = `
+        <button class="modal-close" onclick="closeQuickView()" aria-label="Close quick view">✕</button>
+        <div class="quick-modal" role="dialog" aria-modal="true" aria-label="${product.name}">
+          <img src="${product.img}" alt="${product.name}">
+          <div class="quick-info">
+            <div class="product-cat">${product.cat}</div>
+            <h2 style="font-size:42px; line-height:1; margin:8px 0 14px;">${product.name}</h2>
+            <div class="rating-row" style="justify-content:flex-start;">
+              <span class="stars">${getStars(product.rating)} ${product.rating}</span>
+              <span class="review-count">${product.reviews} reviews</span>
+            </div>
+            <div class="product-price" style="font-size:34px; color:var(--accent); margin:16px 0;">${product.price} جنيه</div>
+            <p style="color:var(--text-secondary); margin-bottom:24px;">${product.description}</p>
+            <strong>Choose size</strong>
+            <div class="size-options">
+              ${['S', 'M', 'L', 'XL', 'XXL'].map(size => `<button class="size-btn ${size === selectedSize ? 'active' : ''}" onclick="selectSize(this, '${size}')">${size}</button>`).join('')}
+            </div>
+            <button class="nav-btn" onclick="toggleSizeChart()" style="font-size:14px; color:var(--accent); margin-bottom:10px;">Size chart</button>
+            <div class="size-chart" id="size-chart">
+              <div><strong>Size</strong><strong>Chest</strong><strong>Length</strong></div>
+              <div><span>S</span><span>50 cm</span><span>68 cm</span></div>
+              <div><span>M</span><span>54 cm</span><span>72 cm</span></div>
+              <div><span>L</span><span>58 cm</span><span>76 cm</span></div>
+              <div><span>XL</span><span>62 cm</span><span>80 cm</span></div>
+            </div>
+            <div class="detail-row"><strong>Fabric</strong>${product.fabric}</div>
+            <div class="detail-row"><strong>Stock</strong>${product.stock}</div>
+            <button class="btn btn-primary" style="width:100%; margin-top:24px;" onclick="addSelectedProductToCart(${product.id})">Add to Cart</button>
+          </div>
+        </div>
+      `;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeQuickView() {
+      const modal = document.getElementById('quick-view-modal');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    function selectSize(button, size) {
+      selectedSize = size;
+      button.parentElement.querySelectorAll('.size-btn').forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+    }
+
+    function toggleSizeChart() {
+      document.getElementById('size-chart').classList.toggle('show');
+    }
+
+    function addSelectedProductToCart(productId) {
+      const product = products.find(item => item.id === productId);
+      closeQuickView();
+      addToCart(`${product.name} - ${selectedSize}`, product.price);
+    }
+
+    renderProducts();
+
+    // Cart Logic
+    let cart = [];
+    function toggleCart() {
+      document.getElementById('cart-drawer').classList.toggle('open');
+      document.getElementById('cart-overlay').classList.toggle('show');
+    }
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCartUI();
+      toggleCart();
+    }
+
+    function updateCartUI() {
+      const container = document.getElementById('cart-items');
+      const totalEl = document.getElementById('cart-total');
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-dim); text-align:center; margin-top:100px;">السلة فارغة حالياً</p>';
+        totalEl.textContent = '0 جنيه';
+        return;
+      }
+
+      container.innerHTML = cart.map((item, index) => `
+      <div style="display:flex; justify-content:space-between; margin-bottom:20px; background:var(--bg-deep); padding:15px; border:1px solid var(--border);">
+        <div>
+          <div style="font-weight:700; font-size:14px;">${item.name}</div>
+          <div style="color:var(--accent); font-size:12px; font-weight:900;">${item.price} جنيه</div>
+        </div>
+        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:16px;">✕</button>
+      </div>
+    `).join('');
+
+      const total = cart.reduce((sum, item) => sum + parseInt(item.price.replace(',', '')), 0);
+      totalEl.textContent = total.toLocaleString() + ' جنيه';
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function startCountdown() {
+      const endKey = 'jubaFlashDealEnds';
+      const dayMs = 24 * 60 * 60 * 1000;
+      let endTime = Number(localStorage.getItem(endKey));
+      if (!endTime || endTime < Date.now()) {
+        endTime = Date.now() + dayMs;
+        localStorage.setItem(endKey, String(endTime));
+      }
+
+      function tick() {
+        let remaining = endTime - Date.now();
+        if (remaining <= 0) {
+          endTime = Date.now() + dayMs;
+          localStorage.setItem(endKey, String(endTime));
+          remaining = dayMs;
+        }
+
+        const hours = Math.floor(remaining / 3600000);
+        const minutes = Math.floor((remaining % 3600000) / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        document.getElementById('count-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('count-minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('count-seconds').textContent = String(seconds).padStart(2, '0');
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    function closePromoPopup(remember) {
+      const popup = document.getElementById('promo-popup');
+      popup.classList.remove('show');
+      popup.setAttribute('aria-hidden', 'true');
+      if (remember) {
+        localStorage.setItem('jubaPromoSeen', 'true');
+      }
+    }
+
+    function showPromoPopup() {
+      if (localStorage.getItem('jubaPromoSeen')) return;
+      setTimeout(() => {
+        const popup = document.getElementById('promo-popup');
+        popup.classList.add('show');
+        popup.setAttribute('aria-hidden', 'false');
+      }, 1200);
+    }
+
+    function startSocialProof() {
+      const toast = document.getElementById('social-toast');
+      const messages = [
+        'أحمد من القاهرة اشترى Essential White T-Shirt منذ 3 دقائق',
+        'Mona from Giza added Phantom Luxury Sneaker to her wishlist',
+        'Karim from Alexandria ordered Black Leather Jacket 8 minutes ago',
+        'Sara from Mansoura bought Safari Kids Set today'
+      ];
+      let index = 0;
+
+      function showToast() {
+        toast.textContent = messages[index];
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 5200);
+        index = (index + 1) % messages.length;
+      }
+
+      setTimeout(showToast, 1800);
+      setInterval(showToast, 8000);
+    }
+
+    document.getElementById('quick-view-modal').addEventListener('click', event => {
+      if (event.target.id === 'quick-view-modal') closeQuickView();
+    });
+
+    document.getElementById('promo-popup').addEventListener('click', event => {
+      if (event.target.id === 'promo-popup') closePromoPopup(true);
+    });
+
+    startCountdown();
+    showPromoPopup();
+    startSocialProof();
+
+    // JUBA Hero 3D Animation with Scroll
+    function initJubaHero3D() {
+      if (!window.gsap || !window.ScrollTrigger) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const tshirt = document.querySelector('#tshirt-3d');
+      const jubaTitle = document.querySelector('.juba-brand-hero h1');
+
+      // Mouse parallax effect
+      document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        
+        gsap.to(tshirt, {
+          rotateY: x,
+          rotateX: -y,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      });
+
+      // Scroll animation
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: '.cinematic-hero',
+          start: 'top top',
+          end: '+=1500',
+          scrub: 1,
+          pin: true
+        }
+      })
+      .to(tshirt, {
+        rotateY: 360,
+        rotateX: 15,
+        scale: 1.2,
+        z: 200,
+        duration: 1
+      })
+      .to(jubaTitle, {
+        scale: 0.8,
+        opacity: 0.3,
+        x: -100,
+        duration: 1
+      }, 0)
+      .to('.hero-glow', {
+        scale: 1.5,
+        opacity: 0.3,
+        duration: 1
+      }, 0);
+
+      // Floating animation
+      gsap.to(tshirt, {
+        y: -20,
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      // Title pulse
+      gsap.to(jubaTitle, {
+        textShadow: '0 0 120px rgba(210, 255, 0, 0.5)',
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+    }
+
+    initJubaHero3D();
+
+    // Product Card 3D Hover Effects
+    function initProductCards3D() {
+      const productCards = document.querySelectorAll('.product-card');
+
+      productCards.forEach(card => {
+        const imgContainer = card.querySelector('.product-img-container');
+        
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, {
+            scale: 1.02,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            scale: 1,
+            rotateX: 0,
+            rotateY: 0,
+            duration: 0.5,
+            ease: 'power2.out'
+          });
+          card.style.setProperty('--rotate-x', '0deg');
+          card.style.setProperty('--rotate-y', '0deg');
+        });
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateX = ((y - centerY) / centerY) * -10;
+          const rotateY = ((x - centerX) / centerX) * 10;
+          
+          const mouseXPercent = (x / rect.width) * 100;
+          const mouseYPercent = (y / rect.height) * 100;
+          
+          card.style.setProperty('--mouse-x', `${mouseXPercent}%`);
+          card.style.setProperty('--mouse-y', `${mouseYPercent}%`);
+          card.style.setProperty('--rotate-x', `${rotateX}deg`);
+          card.style.setProperty('--rotate-y', `${rotateY}deg`);
+          
+          gsap.to(card, {
+            rotateX: rotateX,
+            rotateY: rotateY,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+      });
+    }
+
+    // Initialize after DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initProductCards3D);
+    } else {
+      initProductCards3D();
+    }
+  </script>
+
+</body>
+
+</html>

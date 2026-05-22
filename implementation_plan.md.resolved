@@ -1,0 +1,58 @@
+# Fashion Brand Features — Implementation Plan
+
+## Scope
+Add the key frontend features from [fashion_brand_website_features.md](file:///e:/Desktop%20folders/react_app/Juba_Store/fashion_brand_website_features.md) to the existing [juba_store.html](file:///e:/Desktop%20folders/react_app/Juba_Store/juba_store.html). Backend-dependent features (payments, real order tracking, admin dashboard) are mocked as UI only.
+
+## Already Implemented ✅
+- Add to cart + side-drawer cart
+- Product grid with hover animations
+- Newsletter signup
+- Mobile-responsive layout
+- Footer with links
+
+---
+
+## Features to Add
+
+### 1. Product Details — Quick View Modal
+- Click a product card → opens a full-screen modal
+- Shows: large image, size selector (S/M/L/XL/XXL), size chart toggle, fabric info, stock indicator, description
+- "Add to Cart" button inside the modal
+
+### 2. Wishlist System
+- Heart icon on each product card
+- Saves to `localStorage`
+- Visual feedback (filled heart)
+
+### 3. Flash Deal / Countdown Timer Section
+- New section between products and kids section
+- Countdown timer (24h) with a featured product
+- Urgent CTA styling
+
+### 4. Product Filtering / Category Tabs
+- Tab bar above product grid: "الكل | Top Wear | Footwear | Kids"
+- Filters products dynamically
+
+### 5. WhatsApp Chat Button (Floating)
+- Fixed bottom-left green WhatsApp button
+- Opens `wa.me` link
+
+### 6. Promo Popup (First Visit)
+- Modal popup on first visit (uses `localStorage`)
+- "Get 15% off your first order" with email input
+- Dismiss button
+
+### 7. Social Proof Toast Notifications
+- Small toast at bottom: "أحمد من القاهرة اشترى Oversized T-Shirt منذ 3 دقائق"
+- Cycles through fake data every 8 seconds
+
+### 8. Product Reviews Section
+- Star ratings display on product cards
+- Review count badge
+
+---
+
+## Verification
+- All features work without a backend (localStorage + JS only)
+- Responsive on mobile
+- Animations are smooth and premium
