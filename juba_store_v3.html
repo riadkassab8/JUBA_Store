@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
@@ -38,6 +38,227 @@
       overflow-x: hidden;
       direction: rtl;
       line-height: 1.6;
+    }
+
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 120px;
+      font-weight: 900;
+      letter-spacing: 15px;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent);
+      position: relative;
+      animation: logoGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes logoGlow {
+
+      0%,
+      100% {
+        -webkit-text-stroke: 2px var(--accent);
+        filter: drop-shadow(0 0 10px rgba(210, 255, 0, 0.3));
+      }
+
+      50% {
+        -webkit-text-stroke: 2px var(--accent);
+        filter: drop-shadow(0 0 30px rgba(210, 255, 0, 0.8));
+      }
+    }
+
+    .loading-logo::before {
+      content: 'JUBA';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0%;
+      height: 100%;
+      color: var(--accent);
+      -webkit-text-stroke: 0px;
+      overflow: hidden;
+      animation: fillText 2.5s ease-in-out infinite;
+    }
+
+    @keyframes fillText {
+
+      0%,
+      100% {
+        width: 0%;
+      }
+
+      50% {
+        width: 100%;
+      }
+    }
+
+    .loading-subtitle {
+      margin-top: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      animation: fadeInOut 2s ease-in-out infinite;
+    }
+
+    .loading-blessing {
+      margin-top: 30px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-align: center;
+      animation: blessingGlow 2s ease-in-out infinite;
+      text-shadow: 0 0 20px rgba(210, 255, 0, 0.5);
+    }
+
+    @keyframes blessingGlow {
+
+      0%,
+      100% {
+        opacity: 0.7;
+        text-shadow: 0 0 20px rgba(210, 255, 0, 0.3);
+      }
+
+      50% {
+        opacity: 1;
+        text-shadow: 0 0 30px rgba(210, 255, 0, 0.8);
+      }
+    }
+
+    @keyframes fadeInOut {
+
+      0%,
+      100% {
+        opacity: 0.3;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .loading-bars {
+      display: flex;
+      gap: 8px;
+      margin-top: 40px;
+    }
+
+    .loading-bar {
+      width: 4px;
+      height: 40px;
+      background: var(--accent);
+      border-radius: 2px;
+      animation: barPulse 1.2s ease-in-out infinite;
+    }
+
+    .loading-bar:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .loading-bar:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .loading-bar:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-bar:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    .loading-bar:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes barPulse {
+
+      0%,
+      100% {
+        transform: scaleY(0.3);
+        opacity: 0.3;
+      }
+
+      50% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
+
+    .loading-circle {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border: 2px solid transparent;
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 3s linear infinite;
+      opacity: 0.2;
+    }
+
+    .loading-circle:nth-child(2) {
+      width: 250px;
+      height: 250px;
+      animation-duration: 2s;
+      animation-direction: reverse;
+      border-top-color: rgba(210, 255, 0, 0.5);
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-progress {
+      position: absolute;
+      bottom: 80px;
+      width: 200px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .loading-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent) 0%, #fff 100%);
+      width: 0%;
+      animation: progressLoad 2.5s ease-in-out forwards;
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    @keyframes progressLoad {
+      0% {
+        width: 0%;
+      }
+
+      100% {
+        width: 100%;
+      }
     }
 
     /* Typography */
@@ -126,6 +347,12 @@
     .nav-btn:hover {
       color: var(--accent);
       transform: translateY(-2px);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      width: 220px;
     }
 
     /* Hero Section Overhaul */
@@ -246,6 +473,29 @@
       max-width: 480px;
     }
 
+    .hero-features {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-feature-item {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .hero-feature-item span {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      margin-left: 8px;
+      font-size: 16px;
+    }
+
     @media (max-width: 1024px) {
       .hero {
         flex-direction: column;
@@ -345,7 +595,7 @@
 
     .product-card:hover {
       border-color: var(--accent);
-      box-shadow: 
+      box-shadow:
         0 20px 50px rgba(0, 0, 0, 0.4),
         0 10px 25px rgba(210, 255, 0, 0.1);
       transform: translateY(-8px);
@@ -404,7 +654,7 @@
       pointer-events: none;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 15;
-      box-shadow: 
+      box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.6),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
@@ -422,12 +672,10 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(210, 255, 0, 0.6) 50%,
-        transparent 100%
-      );
+      background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(210, 255, 0, 0.6) 50%,
+          transparent 100%);
     }
 
     .glass-morph-title {
@@ -1037,7 +1285,7 @@
       will-change: transform, filter, opacity;
       background: transparent;
     }
-    
+
     .t-layer img {
       mix-blend-mode: darken;
     }
@@ -1105,6 +1353,29 @@
       color: var(--text-secondary);
       margin-bottom: 40px;
       max-width: 480px;
+    }
+
+    .hero-features {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-feature-item {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .hero-feature-item span {
+      display: inline-block;
+      color: var(--accent);
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      margin-left: 8px;
+      font-size: 16px;
     }
 
     @media (max-width: 1024px) {
@@ -1267,6 +1538,104 @@
       pointer-events: all;
     }
 
+    /* Cart Item Styles */
+    .cart-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background: var(--bg-deep);
+    }
+
+    .cart-item-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .cart-item-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .cart-item-price {
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .qty-btn:hover {
+      background: var(--accent);
+      color: var(--bg-deep);
+      border-color: var(--accent);
+    }
+
+    .qty-display {
+      min-width: 30px;
+      text-align: center;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .remove-btn {
+      margin-left: auto;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 18px;
+      transition: color 0.2s ease;
+    }
+
+    .remove-btn:hover {
+      color: #ff4444;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .cart-empty-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      opacity: 0.3;
+    }
+
     /* Footer */
     footer {
       padding: 100px 5% 50px;
@@ -1385,6 +1754,25 @@
 
 <body>
 
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-circle"></div>
+    <div class="loading-circle"></div>
+    <div class="loading-logo">JUBA</div>
+    <div class="loading-subtitle">Luxury Fashion & Footwear</div>
+    <div class="loading-blessing">صلى الله عليه وسلم</div>
+    <div class="loading-bars">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+    <div class="loading-progress">
+      <div class="loading-progress-bar"></div>
+    </div>
+  </div>
+
   <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
   <div class="cart-drawer" id="cart-drawer">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
@@ -1399,7 +1787,7 @@
         <span>الإجمالي:</span>
         <span id="cart-total" style="font-weight:900; color:var(--accent);">0 جنيه</span>
       </div>
-      <button class="btn btn-primary" style="width:100%">إتمام الطلب</button>
+      <button class="btn btn-primary" style="width:100%" onclick="checkoutToWhatsApp()">إتمام الطلب</button>
     </div>
   </div>
 
@@ -1408,31 +1796,39 @@
     <div class="promo-card">
       <div class="deal-kicker">FIRST ORDER</div>
       <h2>15% OFF</h2>
-      <p style="color:var(--text-secondary);">Get 15% off your first JUBA order. Drop your email and claim the private code.</p>
+      <p style="color:var(--text-secondary);">Get 15% off your first JUBA order. Drop your email and claim the private
+        code.</p>
       <form class="promo-form" onsubmit="event.preventDefault(); closePromoPopup(true);">
         <input type="email" placeholder="Email address" required>
         <button class="btn btn-primary" type="submit" style="padding:14px 22px;">Claim</button>
       </form>
-      <button class="nav-btn" onclick="closePromoPopup(true)" style="margin-top:20px; color:var(--text-secondary); font-size:14px;">Maybe later</button>
+      <button class="nav-btn" onclick="closePromoPopup(true)"
+        style="margin-top:20px; color:var(--text-secondary); font-size:14px;">Maybe later</button>
     </div>
   </div>
-  <a class="whatsapp-float" href="https://wa.me/201098277229" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WA</a>
+  <a class="whatsapp-float" href="https://wa.me/201098277229" target="_blank" rel="noopener"
+    aria-label="Chat on WhatsApp">WA</a>
   <div class="social-toast" id="social-toast" role="status" aria-live="polite"></div>
 
   <nav id="navbar">
     <a href="#" class="nav-brand">JUBA<span>.</span></a>
     <div class="nav-links">
-      <a href="#" class="nav-link active">الرئيسية</a>
+      <a href="#hero-section" class="nav-link active">الرئيسية</a>
       <a href="#collection" class="nav-link">المواد</a>
-      <a href="#men" class="nav-link">الرجال</a>
+      <a href="#flash-deal" class="nav-link">العروض</a>
       <a href="#kids" class="nav-link">الأطفال</a>
     </div>
     <div class="nav-icons">
-      <button class="nav-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2">
+      <div style="position:relative;">
+        <input type="text" class="search-input" placeholder="ابحث عن منتج..."
+          style="background:var(--bg-deep); border:1px solid var(--border); color:var(--text-primary); padding:8px 35px 8px 12px; border-radius:4px; font-size:13px; font-family:'Tajawal'; width:180px; transition:var(--transition);">
+        <svg
+          style="position:absolute; right:10px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:var(--text-secondary);"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8" />
           <path d="m21 21-4.35-4.35" />
-        </svg></button>
+        </svg>
+      </div>
       <button class="nav-btn" onclick="toggleCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2">
           <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
@@ -1446,10 +1842,15 @@
 
   <section class="hero cinematic-hero" id="hero-section">
     <div class="hero-glow"></div>
-    
+
     <div class="juba-brand-hero">
       <h1>JUBA</h1>
       <p class="tagline">LUXURY FASHION & FOOTWEAR</p>
+      <div class="hero-features">
+        <div><span>01</span> Fabric Shell</div>
+        <div><span>02</span> Seams + Stitching</div>
+        <div><span>03</span> Label System</div>
+      </div>
     </div>
 
     <div class="hero-showcase">
@@ -1458,10 +1859,6 @@
       </div>
     </div>
   </section>
-      <div><span>01</span> Fabric Shell</div>
-      <div><span>02</span> Seams + Stitching</div>
-      <div><span>03</span> Label System</div>
-    </div>
   </section>
 
   <div class="marquee">
@@ -1505,7 +1902,8 @@
       <div class="deal-content">
         <div class="deal-kicker">24H FLASH DROP</div>
         <h2 class="deal-title">PHANTOM SNEAKER DEAL</h2>
-        <p style="color:var(--text-secondary); font-size:18px; max-width:560px;">Limited daily price on the featured streetwear sneaker. The timer resets every 24 hours for demo checkout flow.</p>
+        <p style="color:var(--text-secondary); font-size:18px; max-width:560px;">Limited daily price on the featured
+          streetwear sneaker. The timer resets every 24 hours for demo checkout flow.</p>
         <div class="countdown" id="countdown">
           <div class="count-box"><strong id="count-hours">00</strong><span>Hours</span></div>
           <div class="count-box"><strong id="count-minutes">00</strong><span>Minutes</span></div>
@@ -1515,7 +1913,8 @@
         <button class="btn btn-primary" onclick="openQuickView(3)">Shop Flash Deal</button>
       </div>
       <div class="deal-media">
-        <img src="https://images.pexels.com/photos/1461048/pexels-photo-1461048.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Phantom Luxury Sneaker">
+        <img src="https://images.pexels.com/photos/1461048/pexels-photo-1461048.jpeg?auto=compress&cs=tinysrgb&w=1000"
+          alt="Phantom Luxury Sneaker">
       </div>
     </div>
   </section>
@@ -1596,656 +1995,12 @@
     </div>
   </footer>
 
-  <script>
-    const imgUrl = (photoId, width = 1000) => `https://images.pexels.com/photos/${photoId}/pexels-photo-${photoId}.jpeg?auto=compress&cs=tinysrgb&w=${width}`;
-
-    // Product data keeps hover sources category-safe for scalable grids.
-    const products = [
-      {
-        id: 0,
-        name: 'Essential White T-Shirt',
-        price: '450',
-        cat: 'Top Wear',
-        img: imgUrl('12025472'),
-        hoverImage: imgUrl('12025472', 1200),
-        imageVariants: [imgUrl('12025472', 1200)],
-        badge: 'NEW',
-        rating: 4.8,
-        reviews: 126,
-        stock: 'In stock - 18 pieces',
-        fabric: '240 GSM brushed cotton jersey with reinforced neckline.',
-        description: 'A clean everyday tee with a structured shoulder, soft hand feel, and a premium streetwear drape.'
-      },
-      {
-        id: 1,
-        name: 'Shadow Black T-Shirt',
-        price: '520',
-        cat: 'Top Wear',
-        img: imgUrl('8532616'),
-        hoverProductId: 0,
-        hoverImage: imgUrl('8532616', 1200),
-        imageVariants: [imgUrl('8532616', 1200)],
-        badge: 'BESTSELLER',
-        rating: 4.7,
-        reviews: 142,
-        stock: 'In stock - 27 pieces',
-        fabric: 'Soft compact cotton with a clean black dye finish.',
-        description: 'A sharp black tee for daily styling, made to hold its shape through repeated wear.'
-      },
-      {
-        id: 2,
-        name: 'Cream Knit Top',
-        price: '680',
-        cat: 'Top Wear',
-        img: imgUrl('6046231'),
-        hoverProductId: 1,
-        hoverImage: imgUrl('6046231', 1200),
-        imageVariants: [imgUrl('6046231', 1200)],
-        badge: 'SOFT TOUCH',
-        rating: 4.6,
-        reviews: 88,
-        stock: 'In stock - 14 pieces',
-        fabric: 'Fine knit cotton blend with ribbed hem and sleeve finish.',
-        description: 'A lightweight knit top with an elevated texture and a relaxed premium silhouette.'
-      },
-      {
-        id: 3,
-        name: 'Phantom Luxury Sneaker',
-        price: '1,200',
-        cat: 'Footwear',
-        img: imgUrl('1461048'),
-        hoverProductId: 4,
-        hoverImage: imgUrl('1461048', 1200),
-        imageVariants: [imgUrl('1461048', 1200)],
-        badge: 'TRENDING',
-        rating: 4.9,
-        reviews: 211,
-        stock: 'Low stock - 12 pairs',
-        fabric: 'Layered vegan leather upper, cushioned EVA midsole, rubber grip sole.',
-        description: 'A sculptural sneaker built for long city days, finished with a bold profile and a soft, secure interior.'
-      },
-      {
-        id: 4,
-        name: 'Cloud High-Top Sneakers',
-        price: '1,350',
-        cat: 'Footwear',
-        img: imgUrl('20350010'),
-        hoverProductId: 5,
-        hoverImage: imgUrl('20350010', 1200),
-        imageVariants: [imgUrl('20350010', 1200)],
-        badge: 'LIMITED',
-        rating: 4.8,
-        reviews: 164,
-        stock: 'In stock - 16 pairs',
-        fabric: 'Premium synthetic leather panels with padded collar and lace-up support.',
-        description: 'A high-top sneaker with clean contrast panels and a polished streetwear profile.'
-      },
-      {
-        id: 5,
-        name: 'Studio Runner Sneakers',
-        price: '980',
-        cat: 'Footwear',
-        img: imgUrl('4252969'),
-        hoverProductId: 3,
-        hoverImage: imgUrl('4252969', 1200),
-        imageVariants: [imgUrl('4252969', 1200)],
-        badge: 'HOT',
-        rating: 4.5,
-        reviews: 73,
-        stock: 'In stock - 31 pairs',
-        fabric: 'Mesh textile upper, lightweight foam sole, lace-up fit.',
-        description: 'A crisp runner silhouette designed for easy styling with denim, joggers, and summer fits.'
-      },
-      {
-        id: 6,
-        name: 'Black Leather Jacket',
-        price: '2,100',
-        cat: 'Jackets',
-        img: imgUrl('6044143'),
-        hoverProductId: 7,
-        hoverImage: imgUrl('6044143', 1200),
-        imageVariants: [imgUrl('6044143', 1200)],
-        badge: 'PREMIUM',
-        rating: 4.9,
-        reviews: 96,
-        stock: 'Low stock - 7 pieces',
-        fabric: 'Soft faux leather shell with smooth lining and metal zipper detail.',
-        description: 'A clean black jacket built around sharp lines, texture, and a timeless evening profile.'
-      },
-      {
-        id: 7,
-        name: 'White Studio Hoodie',
-        price: '990',
-        cat: 'Jackets',
-        img: imgUrl('8217419'),
-        hoverProductId: 6,
-        hoverImage: imgUrl('8217419', 1200),
-        imageVariants: [imgUrl('8217419', 1200)],
-        badge: 'COZY',
-        rating: 4.6,
-        reviews: 117,
-        stock: 'In stock - 19 pieces',
-        fabric: 'Heavy fleece cotton blend with soft brushed interior.',
-        description: 'A clean hoodie for layered fits, made with a relaxed cut and warm studio texture.'
-      },
-      {
-        id: 8,
-        name: 'Urban Zip Jacket',
-        price: '1,650',
-        cat: 'Jackets',
-        img: imgUrl('626547'),
-        hoverProductId: 6,
-        hoverImage: imgUrl('626547', 1200),
-        imageVariants: [imgUrl('626547', 1200)],
-        badge: 'DROP',
-        rating: 4.7,
-        reviews: 65,
-        stock: 'In stock - 11 pieces',
-        fabric: 'Structured woven shell with matte finish and comfort lining.',
-        description: 'A monochrome outerwear piece with a strong urban line and easy layering weight.'
-      },
-      {
-        id: 9,
-        name: 'Safari Kids Set',
-        price: '750',
-        cat: 'Kids',
-        img: imgUrl('5693888'),
-        hoverProductId: 10,
-        hoverImage: imgUrl('5693888', 1200),
-        imageVariants: [imgUrl('5693888', 1200)],
-        badge: 'HOT',
-        rating: 4.6,
-        reviews: 97,
-        stock: 'In stock - 23 sets',
-        fabric: 'Breathable cotton blend with flexible seams for everyday movement.',
-        description: 'A playful coordinated kids set with soft textures, easy layering, and colors designed for daily wear.'
-      },
-      {
-        id: 10,
-        name: 'Wardrobe Play Dress',
-        price: '690',
-        cat: 'Kids',
-        img: imgUrl('8083839'),
-        hoverProductId: 9,
-        hoverImage: imgUrl('8083839', 1200),
-        imageVariants: [imgUrl('8083839', 1200)],
-        badge: 'NEW',
-        rating: 4.5,
-        reviews: 54,
-        stock: 'In stock - 20 pieces',
-        fabric: 'Lightweight cotton layers with flexible seams and soft finishing.',
-        description: 'A bright playful kids outfit for weekend styling, made for movement and comfort.'
-      },
-      {
-        id: 11,
-        name: 'Mini Street Layer',
-        price: '820',
-        cat: 'Kids',
-        img: imgUrl('28771909'),
-        hoverProductId: 9,
-        hoverImage: imgUrl('28771909', 1200),
-        imageVariants: [imgUrl('28771909', 1200)],
-        badge: 'COMFY',
-        rating: 4.7,
-        reviews: 61,
-        stock: 'In stock - 13 pieces',
-        fabric: 'Soft cotton blend with easy-care finish and relaxed fit.',
-        description: 'A modern kids layer with everyday durability, cheerful styling, and simple comfort.'
-      }
-    ];
-
-    const grid = document.getElementById('product-grid');
-    const wishlistKey = 'jubaWishlist';
-    let activeCategory = 'All';
-    let selectedSize = 'M';
-    let wishlist = JSON.parse(localStorage.getItem(wishlistKey) || '[]');
-    const productsById = new Map(products.map(product => [product.id, product]));
-    const productsByCategory = products.reduce((index, product) => {
-      const category = product.cat.trim().toLowerCase();
-      if (!index.has(category)) {
-        index.set(category, []);
-      }
-      index.get(category).push(product);
-      return index;
-    }, new Map());
-
-    function saveWishlist() {
-      localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
-    }
-
-    function getStars(rating) {
-      const filled = Math.round(rating);
-      return '★★★★★'.slice(0, filled) + '☆☆☆☆☆'.slice(filled);
-    }
-
-    function getSameProductHoverImage(product) {
-      const variant = product.imageVariants?.find(image => image && image !== product.img);
-      return variant || product.hoverImage || product.img;
-    }
-
-    function getSameCategoryHoverProduct(product) {
-      const category = product.cat.trim().toLowerCase();
-      const categoryProducts = productsByCategory.get(category) || [];
-      const preferredHoverProduct = productsById.get(product.hoverProductId);
-
-      if (preferredHoverProduct && preferredHoverProduct.cat.trim().toLowerCase() === category) {
-        return preferredHoverProduct;
-      }
-
-      return categoryProducts.find(candidate => candidate.id !== product.id && candidate.img);
-    }
-
-    function resolveHoverImage(product) {
-      const sameProductImage = getSameProductHoverImage(product);
-      const sameCategoryProduct = getSameCategoryHoverProduct(product);
-
-      if (sameProductImage && sameProductImage !== product.img) {
-        return sameProductImage;
-      }
-
-      if (sameCategoryProduct && sameCategoryProduct.cat.trim().toLowerCase() === product.cat.trim().toLowerCase()) {
-        return sameCategoryProduct.img;
-      }
-
-      return product.hoverImage || product.img;
-    }
-
-    function productCardTemplate(product) {
-      const wished = wishlist.includes(product.id);
-      const hoverImage = resolveHoverImage(product);
-
-      return `
-        <div class="product-card" data-category="${product.cat}" onclick="openQuickView(${product.id})">
-          ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
-          <button class="wishlist-btn ${wished ? 'active' : ''}" onclick="toggleWishlist(event, ${product.id})" aria-label="Toggle wishlist">
-            ${wished ? '♥' : '♡'}
-          </button>
-          <div class="product-img-container">
-            <img src="${product.img}" alt="${product.name}" class="product-img main">
-            <img src="${hoverImage}" alt="${product.name} hover view" class="product-img hover">
-            
-            <!-- Glass Morphism Overlay -->
-            <div class="glass-morph-overlay">
-              <div class="glass-morph-title">${product.name}</div>
-              <div class="glass-morph-price">${product.price} جنيه</div>
-              <div class="glass-morph-details">
-                <div class="glass-morph-detail">
-                  <span>التقييم</span>
-                  <span class="glass-morph-detail-value">${product.rating} ⭐</span>
-                </div>
-                <div class="glass-morph-detail">
-                  <span>المراجعات</span>
-                  <span class="glass-morph-detail-value">${product.reviews}</span>
-                </div>
-              </div>
-              <button class="glass-morph-btn" onclick="event.stopPropagation(); addToCart('${product.name}', '${product.price}')">
-                أضف للسلة
-              </button>
-            </div>
-          </div>
-          <div class="product-info">
-            <div class="product-cat">${product.cat}</div>
-            <div class="product-name">${product.name}</div>
-            <div class="rating-row">
-              <span class="stars">${getStars(product.rating)} ${product.rating}</span>
-              <span class="review-count">${product.reviews} reviews</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-              <div class="product-price">${product.price} جنيه</div>
-              <button class="btn btn-primary" style="padding:10px 20px; font-size:12px;" onclick="event.stopPropagation(); addToCart('${product.name}', '${product.price}')">أضف للسلة</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderProducts() {
-      const visibleProducts = activeCategory === 'All'
-        ? products
-        : products.filter(product => product.cat === activeCategory);
-
-      grid.innerHTML = visibleProducts.map(productCardTemplate).join('');
-    }
-
-    function toggleWishlist(event, productId) {
-      event.stopPropagation();
-      wishlist = wishlist.includes(productId)
-        ? wishlist.filter(id => id !== productId)
-        : [...wishlist, productId];
-      saveWishlist();
-      renderProducts();
-    }
-
-    document.querySelectorAll('.filter-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        activeCategory = tab.dataset.category;
-        document.querySelectorAll('.filter-tab').forEach(item => item.classList.remove('active'));
-        tab.classList.add('active');
-        renderProducts();
-      });
-    });
-
-    function openQuickView(productId) {
-      const product = products.find(item => item.id === productId);
-      const modal = document.getElementById('quick-view-modal');
-      selectedSize = 'M';
-      modal.innerHTML = `
-        <button class="modal-close" onclick="closeQuickView()" aria-label="Close quick view">✕</button>
-        <div class="quick-modal" role="dialog" aria-modal="true" aria-label="${product.name}">
-          <img src="${product.img}" alt="${product.name}">
-          <div class="quick-info">
-            <div class="product-cat">${product.cat}</div>
-            <h2 style="font-size:42px; line-height:1; margin:8px 0 14px;">${product.name}</h2>
-            <div class="rating-row" style="justify-content:flex-start;">
-              <span class="stars">${getStars(product.rating)} ${product.rating}</span>
-              <span class="review-count">${product.reviews} reviews</span>
-            </div>
-            <div class="product-price" style="font-size:34px; color:var(--accent); margin:16px 0;">${product.price} جنيه</div>
-            <p style="color:var(--text-secondary); margin-bottom:24px;">${product.description}</p>
-            <strong>Choose size</strong>
-            <div class="size-options">
-              ${['S', 'M', 'L', 'XL', 'XXL'].map(size => `<button class="size-btn ${size === selectedSize ? 'active' : ''}" onclick="selectSize(this, '${size}')">${size}</button>`).join('')}
-            </div>
-            <button class="nav-btn" onclick="toggleSizeChart()" style="font-size:14px; color:var(--accent); margin-bottom:10px;">Size chart</button>
-            <div class="size-chart" id="size-chart">
-              <div><strong>Size</strong><strong>Chest</strong><strong>Length</strong></div>
-              <div><span>S</span><span>50 cm</span><span>68 cm</span></div>
-              <div><span>M</span><span>54 cm</span><span>72 cm</span></div>
-              <div><span>L</span><span>58 cm</span><span>76 cm</span></div>
-              <div><span>XL</span><span>62 cm</span><span>80 cm</span></div>
-            </div>
-            <div class="detail-row"><strong>Fabric</strong>${product.fabric}</div>
-            <div class="detail-row"><strong>Stock</strong>${product.stock}</div>
-            <button class="btn btn-primary" style="width:100%; margin-top:24px;" onclick="addSelectedProductToCart(${product.id})">Add to Cart</button>
-          </div>
-        </div>
-      `;
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeQuickView() {
-      const modal = document.getElementById('quick-view-modal');
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden', 'true');
-    }
-
-    function selectSize(button, size) {
-      selectedSize = size;
-      button.parentElement.querySelectorAll('.size-btn').forEach(item => item.classList.remove('active'));
-      button.classList.add('active');
-    }
-
-    function toggleSizeChart() {
-      document.getElementById('size-chart').classList.toggle('show');
-    }
-
-    function addSelectedProductToCart(productId) {
-      const product = products.find(item => item.id === productId);
-      closeQuickView();
-      addToCart(`${product.name} - ${selectedSize}`, product.price);
-    }
-
-    renderProducts();
-
-    // Cart Logic
-    let cart = [];
-    function toggleCart() {
-      document.getElementById('cart-drawer').classList.toggle('open');
-      document.getElementById('cart-overlay').classList.toggle('show');
-    }
-
-    function addToCart(name, price) {
-      cart.push({ name, price });
-      updateCartUI();
-      toggleCart();
-    }
-
-    function updateCartUI() {
-      const container = document.getElementById('cart-items');
-      const totalEl = document.getElementById('cart-total');
-
-      if (cart.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-dim); text-align:center; margin-top:100px;">السلة فارغة حالياً</p>';
-        totalEl.textContent = '0 جنيه';
-        return;
-      }
-
-      container.innerHTML = cart.map((item, index) => `
-      <div style="display:flex; justify-content:space-between; margin-bottom:20px; background:var(--bg-deep); padding:15px; border:1px solid var(--border);">
-        <div>
-          <div style="font-weight:700; font-size:14px;">${item.name}</div>
-          <div style="color:var(--accent); font-size:12px; font-weight:900;">${item.price} جنيه</div>
-        </div>
-        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:16px;">✕</button>
-      </div>
-    `).join('');
-
-      const total = cart.reduce((sum, item) => sum + parseInt(item.price.replace(',', '')), 0);
-      totalEl.textContent = total.toLocaleString() + ' جنيه';
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      updateCartUI();
-    }
-
-    function startCountdown() {
-      const endKey = 'jubaFlashDealEnds';
-      const dayMs = 24 * 60 * 60 * 1000;
-      let endTime = Number(localStorage.getItem(endKey));
-      if (!endTime || endTime < Date.now()) {
-        endTime = Date.now() + dayMs;
-        localStorage.setItem(endKey, String(endTime));
-      }
-
-      function tick() {
-        let remaining = endTime - Date.now();
-        if (remaining <= 0) {
-          endTime = Date.now() + dayMs;
-          localStorage.setItem(endKey, String(endTime));
-          remaining = dayMs;
-        }
-
-        const hours = Math.floor(remaining / 3600000);
-        const minutes = Math.floor((remaining % 3600000) / 60000);
-        const seconds = Math.floor((remaining % 60000) / 1000);
-        document.getElementById('count-hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('count-minutes').textContent = String(minutes).padStart(2, '0');
-        document.getElementById('count-seconds').textContent = String(seconds).padStart(2, '0');
-      }
-
-      tick();
-      setInterval(tick, 1000);
-    }
-
-    function closePromoPopup(remember) {
-      const popup = document.getElementById('promo-popup');
-      popup.classList.remove('show');
-      popup.setAttribute('aria-hidden', 'true');
-      if (remember) {
-        localStorage.setItem('jubaPromoSeen', 'true');
-      }
-    }
-
-    function showPromoPopup() {
-      if (localStorage.getItem('jubaPromoSeen')) return;
-      setTimeout(() => {
-        const popup = document.getElementById('promo-popup');
-        popup.classList.add('show');
-        popup.setAttribute('aria-hidden', 'false');
-      }, 1200);
-    }
-
-    function startSocialProof() {
-      const toast = document.getElementById('social-toast');
-      const messages = [
-        'أحمد من القاهرة اشترى Essential White T-Shirt منذ 3 دقائق',
-        'Mona from Giza added Phantom Luxury Sneaker to her wishlist',
-        'Karim from Alexandria ordered Black Leather Jacket 8 minutes ago',
-        'Sara from Mansoura bought Safari Kids Set today'
-      ];
-      let index = 0;
-
-      function showToast() {
-        toast.textContent = messages[index];
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 5200);
-        index = (index + 1) % messages.length;
-      }
-
-      setTimeout(showToast, 1800);
-      setInterval(showToast, 8000);
-    }
-
-    document.getElementById('quick-view-modal').addEventListener('click', event => {
-      if (event.target.id === 'quick-view-modal') closeQuickView();
-    });
-
-    document.getElementById('promo-popup').addEventListener('click', event => {
-      if (event.target.id === 'promo-popup') closePromoPopup(true);
-    });
-
-    startCountdown();
-    showPromoPopup();
-    startSocialProof();
-
-    // JUBA Hero 3D Animation with Scroll
-    function initJubaHero3D() {
-      if (!window.gsap || !window.ScrollTrigger) return;
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      const tshirt = document.querySelector('#tshirt-3d');
-      const jubaTitle = document.querySelector('.juba-brand-hero h1');
-
-      // Mouse parallax effect
-      document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 20;
-        const y = (e.clientY / window.innerHeight - 0.5) * 20;
-        
-        gsap.to(tshirt, {
-          rotateY: x,
-          rotateX: -y,
-          duration: 0.5,
-          ease: 'power2.out'
-        });
-      });
-
-      // Scroll animation
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: '.cinematic-hero',
-          start: 'top top',
-          end: '+=1500',
-          scrub: 1,
-          pin: true
-        }
-      })
-      .to(tshirt, {
-        rotateY: 360,
-        rotateX: 15,
-        scale: 1.2,
-        z: 200,
-        duration: 1
-      })
-      .to(jubaTitle, {
-        scale: 0.8,
-        opacity: 0.3,
-        x: -100,
-        duration: 1
-      }, 0)
-      .to('.hero-glow', {
-        scale: 1.5,
-        opacity: 0.3,
-        duration: 1
-      }, 0);
-
-      // Floating animation
-      gsap.to(tshirt, {
-        y: -20,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-
-      // Title pulse
-      gsap.to(jubaTitle, {
-        textShadow: '0 0 120px rgba(210, 255, 0, 0.5)',
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-    }
-
-    initJubaHero3D();
-
-    // Product Card 3D Hover Effects
-    function initProductCards3D() {
-      const productCards = document.querySelectorAll('.product-card');
-
-      productCards.forEach(card => {
-        const imgContainer = card.querySelector('.product-img-container');
-        
-        card.addEventListener('mouseenter', () => {
-          gsap.to(card, {
-            scale: 1.02,
-            duration: 0.3,
-            ease: 'power2.out'
-          });
-        });
-
-        card.addEventListener('mouseleave', () => {
-          gsap.to(card, {
-            scale: 1,
-            rotateX: 0,
-            rotateY: 0,
-            duration: 0.5,
-            ease: 'power2.out'
-          });
-          card.style.setProperty('--rotate-x', '0deg');
-          card.style.setProperty('--rotate-y', '0deg');
-        });
-
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          
-          const rotateX = ((y - centerY) / centerY) * -10;
-          const rotateY = ((x - centerX) / centerX) * 10;
-          
-          const mouseXPercent = (x / rect.width) * 100;
-          const mouseYPercent = (y / rect.height) * 100;
-          
-          card.style.setProperty('--mouse-x', `${mouseXPercent}%`);
-          card.style.setProperty('--mouse-y', `${mouseYPercent}%`);
-          card.style.setProperty('--rotate-x', `${rotateX}deg`);
-          card.style.setProperty('--rotate-y', `${rotateY}deg`);
-          
-          gsap.to(card, {
-            rotateX: rotateX,
-            rotateY: rotateY,
-            duration: 0.3,
-            ease: 'power2.out'
-          });
-        });
-      });
-    }
-
-    // Initialize after DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initProductCards3D);
-    } else {
-      initProductCards3D();
-    }
-  </script>
-
+  <script src="js/main.js"></script>
 </body>
+
+
+
+
+
 
 </html>
